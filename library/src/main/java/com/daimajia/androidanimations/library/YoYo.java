@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.animation.Interpolator;
 
 import com.nineoldandroids.animation.Animator;
+import com.nineoldandroids.animation.AnimatorListenerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,17 +65,6 @@ public class YoYo {
 
     public interface AnimatorCallback {
         public void call(Animator animator);
-    }
-
-    private static class EmptyAnimatorListener implements Animator.AnimatorListener {
-        @Override
-        public void onAnimationStart(Animator animation){}
-        @Override
-        public void onAnimationEnd(Animator animation){}
-        @Override
-        public void onAnimationCancel(Animator animation){}
-        @Override
-        public void onAnimationRepeat(Animator animation){}
     }
 
     public static final class AnimationComposer {
@@ -117,33 +107,41 @@ public class YoYo {
         }
 
         public AnimationComposer onStart(final AnimatorCallback callback) {
-            callbacks.add(new EmptyAnimatorListener() {
+            callbacks.add(new AnimatorListenerAdapter() {
                 @Override
-                public void onAnimationStart(Animator animation) { callback.call(animation); }
+                public void onAnimationStart(Animator animation) {
+                    callback.call(animation);
+                }
             });
             return this;
         }
 
         public AnimationComposer onEnd(final AnimatorCallback callback) {
-            callbacks.add(new EmptyAnimatorListener() {
+            callbacks.add(new AnimatorListenerAdapter() {
                 @Override
-                public void onAnimationEnd(Animator animation) { callback.call(animation); }
+                public void onAnimationEnd(Animator animation) {
+                    callback.call(animation);
+                }
             });
             return this;
         }
 
         public AnimationComposer onCancel(final AnimatorCallback callback) {
-            callbacks.add(new EmptyAnimatorListener() {
+            callbacks.add(new AnimatorListenerAdapter() {
                 @Override
-                public void onAnimationCancel(Animator animation) { callback.call(animation); }
+                public void onAnimationCancel(Animator animation) {
+                    callback.call(animation);
+                }
             });
             return this;
         }
 
         public AnimationComposer onRepeat(final AnimatorCallback callback) {
-            callbacks.add(new EmptyAnimatorListener() {
+            callbacks.add(new AnimatorListenerAdapter() {
                 @Override
-                public void onAnimationRepeat(Animator animation) { callback.call(animation); }
+                public void onAnimationRepeat(Animator animation) {
+                    callback.call(animation);
+                }
             });
             return this;
         }
